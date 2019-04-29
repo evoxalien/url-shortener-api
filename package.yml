@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  URLShortFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: short.handler
+      Runtime: nodejs8.10
+      Events:
+        URLShortApi:
+          Type: Api
+          Properties:
+            Path: /short
+            Method: GET
+      CodeUri: s3://johnv-testing-sam/f4a499cd3558d19962165619f20dd1cf
+  URLExpandFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: expand.handler
+      Runtime: nodejs8.10
+      Events:
+        URLExpandApi:
+          Type: Api
+          Properties:
+            Path: /expand
+            Method: GET
+      CodeUri: s3://johnv-testing-sam/f4a499cd3558d19962165619f20dd1cf
