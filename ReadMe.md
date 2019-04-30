@@ -4,6 +4,10 @@
 - SAM CLI
 # Setup
 - Create an S3 Bucket
-- Edit deploy.sh to use your S3 Bucket
+- Edit Makefile -> variables at the top
+- Run make setup
 # Deployment
-- run deploy.sh
+- make deploy
+# Working Local
+- make local
+ - Will run sam local start-api

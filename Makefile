@@ -6,6 +6,9 @@ awsProfile := johnvenz
 setup:
 	export AWS_DEFAULT_PROFILE=$(awsProfile)
 
+local:
+	sam local start-api
+
 build: 
 	$(info - - - - CREATING PACKAGE - - - - )
 	sam package \
@@ -22,9 +25,11 @@ deploy: build
 	--region $(region)
 	make clean
 
+clean: 
+	$(info - - - - CLEANING - - - - )
+	rm package.yml
+
+
 delete:
 	$(info - - - - DELETEING - - - - )
 	aws cloudformation delete-stack --stack-name $(stackName)
-
-clean: 
-	rm package.yml
