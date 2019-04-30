@@ -6,22 +6,41 @@ Resources:
     Properties:
       Handler: short.handler
       Runtime: nodejs8.10
+      Policies: AmazonDynamoDBFullAccess
       Events:
         URLShortApi:
           Type: Api
           Properties:
             Path: /short
-            Method: GET
-      CodeUri: s3://johnv-testing-sam/f4a499cd3558d19962165619f20dd1cf
+            Method: POST
+      CodeUri: s3://johnv-testing-sam/fad915857cd8ac9f6375dafdc1fddfb7
   URLExpandFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: expand.handler
       Runtime: nodejs8.10
+      Policies: AmazonDynamoDBFullAccess
       Events:
         URLExpandApi:
           Type: Api
           Properties:
             Path: /expand
-            Method: GET
-      CodeUri: s3://johnv-testing-sam/f4a499cd3558d19962165619f20dd1cf
+            Method: POST
+      CodeUri: s3://johnv-testing-sam/fad915857cd8ac9f6375dafdc1fddfb7
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: shortuuid
+        AttributeType: S
+      - AttributeName: longurl
+        AttributeType: S
+      KeySchema:
+      - AttributeName: shortuuid
+        KeyType: HASH
+      - AttributeName: longurl
+        KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: '5'
+        WriteCapacityUnits: '5'
+      TableName: shortURL

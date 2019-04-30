@@ -1,9 +1,9 @@
-#Requirments
+# Requirments
 - NodeJS 8.10
 - AWS CLI
 - SAM CLI
-#Setup
+# Setup
 - Create an S3 Bucket
 - Edit deploy.sh to use your S3 Bucket
-#Deployment
+# Deployment
 - run deploy.sh
