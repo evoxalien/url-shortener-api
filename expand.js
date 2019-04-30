@@ -1,30 +1,44 @@
 const aws = require('aws-sdk')
 const ddbDC = new aws.DynamoDB.DocumentClient()
+const tableName = 'shortURL'
 //const shortid = require('shortid')
 
-var response = {}
+let data ={
+  shortURL: "",
+  orignialURL: ""
+}
+
+let response = {
+  statusCode: "",
+  body: ""
+}
 
 exports.handler = async function(event, context) {
   if(event.body != null)
   {
     const stringArr = event.body.split('/')
-    console.log("StringArr:", stringArr)
-    console.log("Arry Len:", stringArr.length)
     const short = stringArr[stringArr.length - 1]
-    console.log(short)
-    console.log(typeof(short))
+
+    //console.log("StringArr:", stringArr)
+    //console.log("Arry Len:", stringArr.length)
+    //console.log(short)
+    //console.log(typeof(short))
+
     var params = {
-      AttributesToGet: [
-        "longurl"
-      ],
-      Key: {
+      
+      ExpressionAttributeValues: {
         "shortuuid": {
           S: short
         }
       },
+      KeyConditionExpression: "#shortuuid = :",
+      ProjectionExpression: [
+        "longurl"
+      ],
       //ReturnConsumedCapacity: "TOTAL",
-      TableName: "shortURL"
+      TableName: tableName
   }
+
     ddbDC.query(params, function(err, data){
       if(err) console.log(err, err.statck)
       else {
@@ -35,10 +49,16 @@ exports.handler = async function(event, context) {
     //params.Item.shortuuid = "http://www.short.com/" + short
     //response = { statusCode: 200, body: JSON.stringify(params) }
     //console.log(response)
+
+    response.statusCode = 200
+    data.shortURL = urlWebstie + short
+    data.orignialURL = original
+    response.body = JSON.stringify(data)
+    console.log(response)
   }
-  else response = { statusCode: 400, body: 'Body Empty!' }
+  else response = { statusCode: 502, body: 'Body Empty!' }
   console.log(response)
 
   
-  return response = { statusCode: 200, body: "Blah" }
+  return response
 }; 
