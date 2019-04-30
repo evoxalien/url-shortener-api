@@ -7,14 +7,14 @@ setup:
 	export AWS_DEFAULT_PROFILE=$(awsProfile)
 
 build: 
-	echo " - - - - CREATING PACKAGE - - - - "
+	$(info - - - - CREATING PACKAGE - - - - )
 	sam package \
 	--template-file template.yml \
 	--output-template-file package.yml \
 	--s3-bucket $(bucketName)
 
 deploy: build
-	echo " - - - - DEPLOYING - - - - "
+	$(info  - - - - DEPLOYING - - - - )
 	sam deploy \
 	--template-file package.yml \
 	--stack-name $(stackName) \
@@ -23,7 +23,7 @@ deploy: build
 	make clean
 
 delete:
-	echo " - - - - DELETEING - - - - "
+	$(info - - - - DELETEING - - - - )
 	aws cloudformation delete-stack --stack-name $(stackName)
 
 clean: 
