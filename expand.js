@@ -10,13 +10,15 @@ exports.handler = async function(event, context) {
   }
   const stringArr = event.path.split('/')
   const short = stringArr[stringArr.length - 1]
-  console.log(short)
+  
   let params = {
     Key: {
         "shortuuid": { S : short }
     },
     TableName: tableName
   }
+
+  const ret = {}
   try {
     await ddb.getItem(params, function(err,data) {
       const ret = {originalURL: data.Item.longurl.S,
