@@ -7,7 +7,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: shortURL
-      Handler: short.handler
+      Handler: src/short.handler
       Runtime: nodejs8.10
       Policies: AmazonDynamoDBFullAccess
       Events:
@@ -23,7 +23,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: shortURL
-      Handler: expand.handler
+      Handler: src/expand.handler
       Runtime: nodejs8.10
       Policies: AmazonDynamoDBFullAccess
       Events:
