@@ -1,6 +1,5 @@
 const aws = require('aws-sdk')
 const ddb = new aws.DynamoDB()
-const tableName = 'shortURL'
 
 exports.handler = async function(event, context) {
   let response = {}
@@ -11,24 +10,22 @@ exports.handler = async function(event, context) {
   const stringArr = event.path.split('/')
   const short = stringArr[stringArr.length - 1]
   
-  let params = {
+  const params = {
     Key: {
         "shortuuid": { S : short }
     },
-    TableName: tableName
+    TableName: process.env.TABLE_NAME
   }
-
-  const ret = {}
+  
   try {
     await ddb.getItem(params, function(err,data) {
-      const ret = {originalURL: data.Item.longurl.S,
+      const body = {originalURL: data.Item.longurl.S,
         shortURL: data.Item.shortuuid.S}
-      response = { statusCode: 200, body: JSON.stringify(ret) }
+      response = { statusCode: 200, body: JSON.stringify(body) }
     }).promise()
     return response
     } 
     catch(err) {
-      console.log(err)
       return { statusCode: 500, body: JSON.stringify(err) };
     }
 }; 

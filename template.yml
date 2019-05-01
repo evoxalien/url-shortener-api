@@ -4,6 +4,9 @@ Resources:
   URLShortFunction:
     Type: AWS::Serverless::Function
     Properties:
+      Environment:
+        Variables:
+          TABLE_NAME: shortURL
       Handler: short.handler
       Runtime: nodejs8.10
       Policies: AmazonDynamoDBFullAccess
@@ -13,9 +16,13 @@ Resources:
           Properties:
             Path: /short
             Method: POST
+      
   URLExpandFunction:
     Type: AWS::Serverless::Function
     Properties:
+      Environment:
+        Variables:
+          TABLE_NAME: shortURL
       Handler: expand.handler
       Runtime: nodejs8.10
       Policies: AmazonDynamoDBFullAccess

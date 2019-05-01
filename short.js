@@ -1,9 +1,8 @@
 const aws = require('aws-sdk')
 const ddb = new aws.DynamoDB()
 const shortid = require('shortid')
-const urlWebsite = "http://www.short.com"
-const tableName = 'shortURL'
-//process.env.NAMEWHATEVER
+require('dotenv').config()
+
 exports.handler = async function(event, context) {
   if(event.body == null){
     return { statusCode: 500, body: "Error: Try passing valid JSON"}
@@ -14,43 +13,24 @@ exports.handler = async function(event, context) {
     return { statusCode: 500, body: 'Error: Make sure your body contains JSON like this - {"originalURL":"google.com"}'}
   }
 
-  let data ={
-    shortURL: "",
-    originalURL: ""
-  }
-  
-  let response = {
-    statusCode: "",
-    body: ""
+  const data = { 
+    shortURL: shortid.generate(), 
+    originalURL: parsedInput.originalURL 
   }
 
-  const original = parsedInput.originalURL
-  const short = shortid.generate()
-  console.log(short)
-  console.log(typeof(short))
-  console.log(original)
-  console.log(typeof(original))
-  var params = {
+  const params = {
     Item: {
-      "shortuuid": {
-        S: short
-      },
-      "longurl": {
-        S: original
-      }
+      "shortuuid": { S: data.shortURL },
+      "longurl": { S: data.originalURL }
     },
-    TableName: tableName
+    TableName: process.env.TABLE_NAME
   }
-
-  data.shortURL = short
-  data.originalURL = original
 
   try {
     await ddb.putItem(params).promise()
     return { statusCode: 200, body: JSON.stringify(data) };
   } 
   catch(err) {
-    console.log(err)
     return { statusCode: 500, body: JSON.stringify(err) };
   }
 

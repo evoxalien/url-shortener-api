@@ -1,0 +1,33 @@
+{
+  "name": "urlshort",
+  "version": "1.0.0",
+  "description": "This is an API for shortening URLs and then making request against those short URLs to recieve the original URL using Lambda, API Gateway and DynamoDB.",
+  "main": "index.js",
+  "dependencies": {
+    "aws": "^0.0.3-2",
+    "aws-sdk": "^2.445.0",
+    "dotenv": "^7.0.0",
+    "shortid": "^2.2.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evoxalien/url-shortener-api.git"
+  },
+  "keywords": [
+    "DynamoDB",
+    "Lambda",
+    "API",
+    "Gateway",
+    "AWS"
+  ],
+  "author": "John Venzon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evoxalien/url-shortener-api/issues"
+  },
+  "homepage": "https://github.com/evoxalien/url-shortener-api#readme"
+}
