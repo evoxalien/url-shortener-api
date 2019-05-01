@@ -24,7 +24,7 @@ exports.handler = async function(event, context) {
     body: ""
   }
 
-  const original = event.body
+  const original = parsedInput.originalURL
   const short = shortid.generate()
   console.log(short)
   console.log(typeof(short))
