@@ -4,14 +4,19 @@
 - SAM CLI
 # Setup
 - Create an S3 Bucket
-- Edit Makefile -> variables at the top
+- Edit Makefile -> edit the variables at the top
 - Run make setup
 # Deployment
 - make deploy
 # Working Local
 - make local (Will run sam local start-api)
 
- # Testing / Example Payloads
+ # Testing / Example Payloads'
+You must deploy before testing locally to setup DynamoDB
+ ```bash
+make deploy
+make local
+ ```
  ## short.js
 ### Successful
 ```bash
