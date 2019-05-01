@@ -21,7 +21,7 @@ paths:
               schema: 
                 type: array
                 items: 
-                  orignialURL: string
+                  originalURL: string
     /expand:
     POST:
       summary: Returns a JSON Object with originalURL and shortURL.

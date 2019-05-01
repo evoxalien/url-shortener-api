@@ -1,25 +1,28 @@
 const aws = require('aws-sdk')
 const ddb = new aws.DynamoDB()
 const shortid = require('shortid')
-const urlWebstie = "http://www.short.com"
+const urlWebsite = "http://www.short.com"
 const tableName = 'shortURL'
-let data ={
-  shortURL: "",
-  orignialURL: ""
-}
-
-let response = {
-  statusCode: "",
-  body: ""
-}
-
+//process.env.NAMEWHATEVER
 exports.handler = async function(event, context) {
   if(event.body != null)
   {
+    let data ={
+      shortURL: "",
+      originalURL: ""
+    }
+    
+    let response = {
+      statusCode: "",
+      body: ""
+    }
+
     const original = event.body
     const short = shortid.generate()
     console.log(short)
     console.log(typeof(short))
+    console.log(original)
+    console.log(typeof(original))
     var params = {
       Item: {
         "shortuuid": {
@@ -31,17 +34,17 @@ exports.handler = async function(event, context) {
       },
       TableName: tableName
     }
-    ddb.putItem(params, function(err, data){
-      if(err) console.log(err, err.statck)
-      else console.log(data)
-    })
-    response.statusCode = 200
-    data.shortURL = urlWebstie + short
-    data.orignialURL = original
-    response.body = JSON.stringify(data)
-    console.log(response)
 
-    return response
+    data.shortURL = short
+    data.originalURL = original
+
+    try {
+     await ddb.putItem(params).promise()
+      return { statusCode: 200, body: JSON.stringify(data) };
+    } 
+    catch(err) {
+      console.log(err)
+      return { statusCode: 500, body: JSON.stringify(err) };
+    }
   }
-  else response = { statusCode: 502, body: 'Body Empty!' }
 }; 

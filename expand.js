@@ -1,64 +1,32 @@
 const aws = require('aws-sdk')
-const ddbDC = new aws.DynamoDB.DocumentClient()
+const ddb = new aws.DynamoDB()
 const tableName = 'shortURL'
-//const shortid = require('shortid')
-
-let data ={
-  shortURL: "",
-  orignialURL: ""
-}
-
-let response = {
-  statusCode: "",
-  body: ""
-}
 
 exports.handler = async function(event, context) {
-  if(event.body != null)
+  let response = {}
+  if(event.path == null)
   {
-    const stringArr = event.body.split('/')
-    const short = stringArr[stringArr.length - 1]
-
-    //console.log("StringArr:", stringArr)
-    //console.log("Arry Len:", stringArr.length)
-    //console.log(short)
-    //console.log(typeof(short))
-
-    var params = {
-      
-      ExpressionAttributeValues: {
-        "shortuuid": {
-          S: short
-        }
-      },
-      KeyConditionExpression: "#shortuuid = :",
-      ProjectionExpression: [
-        "longurl"
-      ],
-      //ReturnConsumedCapacity: "TOTAL",
-      TableName: tableName
+    return response = { statusCode: 500, body: 'Body Empty!' }
   }
-
-    ddbDC.query(params, function(err, data){
-      if(err) console.log(err, err.statck)
-      else {
-        console.log(data)
-        return { statusCode: 200, body: JSON.stringify(data) }
-      }
-    })
-    //params.Item.shortuuid = "http://www.short.com/" + short
-    //response = { statusCode: 200, body: JSON.stringify(params) }
-    //console.log(response)
-
-    response.statusCode = 200
-    data.shortURL = urlWebstie + short
-    data.orignialURL = original
-    response.body = JSON.stringify(data)
-    console.log(response)
+  const stringArr = event.path.split('/')
+  const short = stringArr[stringArr.length - 1]
+  console.log(short)
+  let params = {
+    Key: {
+        "shortuuid": { S : short }
+    },
+    TableName: tableName
   }
-  else response = { statusCode: 502, body: 'Body Empty!' }
-  console.log(response)
-
-  
-  return response
+  try {
+    await ddb.getItem(params, function(err,data) {
+      const ret = {originalURL: data.Item.longurl.S,
+        shortURL: data.Item.shortuuid.S}
+      response = { statusCode: 200, body: JSON.stringify(ret) }
+    }).promise()
+    return response
+    } 
+    catch(err) {
+      console.log(err)
+      return { statusCode: 500, body: JSON.stringify(err) };
+    }
 }; 

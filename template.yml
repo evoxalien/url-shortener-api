@@ -23,21 +23,17 @@ Resources:
         URLExpandApi:
           Type: Api
           Properties:
-            Path: /expand
-            Method: POST
+            Path: /{proxy+}
+            Method: GET
   DynamoDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
         - AttributeName: shortuuid
           AttributeType: S
-        - AttributeName: longurl
-          AttributeType: S
       KeySchema:
         - AttributeName: shortuuid
           KeyType: HASH
-        - AttributeName: longurl
-          KeyType: RANGE
       ProvisionedThroughput:      
         ReadCapacityUnits: "5"
         WriteCapacityUnits: "5"
