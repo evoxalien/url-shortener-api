@@ -5,12 +5,12 @@ require('dotenv').config()
 
 exports.handler = async function(event, context) {
   if(event.body == null){
-    return { statusCode: 500, body: "Error: Try passing valid JSON"}
+    return { statusCode: 500, body: "Error: No Data in Body"}
   }
   const parsedInput = JSON.parse(event.body)
   if(parsedInput.originalURL == undefined)
   {
-    return { statusCode: 500, body: 'Error: Make sure your body contains JSON like this - {"originalURL":"google.com"}'}
+    return { statusCode: 500, body: 'Error: Pass JSON - {"originalURL":"http://www.example.com/someLongURL"}'}
   }
 
   const data = { 
@@ -28,10 +28,9 @@ exports.handler = async function(event, context) {
 
   try {
     await ddb.putItem(params).promise()
-    return { statusCode: 200, body: JSON.stringify(data) };
+    return { statusCode: 200, body: JSON.stringify(data) }
   } 
   catch(err) {
-    return { statusCode: 500, body: JSON.stringify(err) };
+    return { statusCode: 500, body: JSON.stringify(err) }
   }
-
-}; 
+} 
