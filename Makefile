@@ -1,7 +1,7 @@
-stackName  := sam-url
-bucketName := johnv-testing-sam
-region 	   := us-west-2
-awsProfile := johnvenz
+stackName  := short-url
+bucketName := jv-url-short
+region 	   := us-east-1
+awsProfile := workshop
 
 setup:
 	export AWS_DEFAULT_PROFILE=$(awsProfile)
