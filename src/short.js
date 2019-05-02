@@ -13,19 +13,19 @@ exports.handler = async function(event, context) {
     return { statusCode: 406, body: 'Error: Pass JSON - {"originalURL":"http://www.example.com/someLongURL"}'}
   }
 
-  const data = { 
-    shortURL: shortid.generate(), 
-    originalURL: parsedInput.originalURL 
-  }
-
   const params = {
     Item: {
-      "shortuuid": { S: data.shortURL },
-      "longurl": { S: data.originalURL }
+      "shortuuid": { S: shortid.generate() },
+      "longurl": { S: parsedInput.originalURL }
     },
     TableName: process.env.TABLE_NAME
   }
 
+  const data = { 
+    shortURL: process.env.API_ENDPOINT + params.Item.shortuuid.S, 
+    originalURL: parsedInput.originalURL 
+  }
+  
   try {
     await ddb.putItem(params).promise()
     return { statusCode: 200, body: JSON.stringify(data) }

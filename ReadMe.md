@@ -27,7 +27,7 @@ curl --header "Content-Type: application/json" \
 ```
 #### Expected Result: JSON object with shortURL and originalURL
 ```json
-{"shortURL":"-RkM-9o19","originalURL":"google.com"}%
+{"shortURL":"http://localhost:3000/-RkM-9o19","originalURL":"google.com"}%
 ```
 
  ### Failure
