@@ -7,7 +7,6 @@ exports.handler = async function(event, context) {
   {
     return response = { statusCode: 500, body: 'Body Empty!' }
   }
-  console.log(event)
   const stringArr = event.path.split('/')
   
   const params = {
@@ -24,6 +23,6 @@ exports.handler = async function(event, context) {
     return { statusCode: 308, headers: { "Location": ret.Item.longurl.S } }
     } 
     catch(err) {
-      return { statusCode: 500, body: JSON.stringify(err) }
+      return { statusCode: 404, body: "URL Does Not Exist" }
     }
 } 

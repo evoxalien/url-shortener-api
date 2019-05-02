@@ -5,12 +5,12 @@ require('dotenv').config()
 
 exports.handler = async function(event, context) {
   if(event.body == null){
-    return { statusCode: 500, body: "Error: No Data in Body"}
+    return { statusCode: 406, body: "Error: No Data in Body"}
   }
   const parsedInput = JSON.parse(event.body)
   if(parsedInput.originalURL == undefined)
   {
-    return { statusCode: 500, body: 'Error: Pass JSON - {"originalURL":"http://www.example.com/someLongURL"}'}
+    return { statusCode: 406, body: 'Error: Pass JSON - {"originalURL":"http://www.example.com/someLongURL"}'}
   }
 
   const data = { 
