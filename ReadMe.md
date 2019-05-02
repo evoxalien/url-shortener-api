@@ -1,4 +1,4 @@
-# Requirments
+# Requirements
 - NodeJS 8.10
 - AWS CLI
 - SAM CLI
@@ -25,7 +25,7 @@ curl --header "Content-Type: application/json" \
   --data '{"originalURL":"google.com"}' \
   http://localhost:3000/short
 ```
-#### Expected Result:
+#### Expected Result: JSON object with shortURL and originalURL
 ```json
 {"shortURL":"-RkM-9o19","originalURL":"google.com"}%
 ```
@@ -37,7 +37,7 @@ curl --header "Content-Type: application/json" \
   --data '{"riginalURL":"google.com"}' \
   http://localhost:3000/short
 ```
-#### Expected Result:
+#### Expected Result: Failure due to bad JSON element "riginalURL"
 ```
 Error: Make sure your body contains JSON like this - {"originalURL":"google.com"}%
 ```
@@ -46,15 +46,15 @@ Error: Make sure your body contains JSON like this - {"originalURL":"google.com"
 ```bash
 curl http://127.0.0.1:3000/-RkM-9o19
 ```
-#### Expected Result:
+#### Expected Result: Redirect to original URL
 ```json
-{"originalURL":"google.com","shortURL":"-RkM-9o19"}%
+{ statusCode: 308, headers: { "Location": "google.com" }}%
 ```
 ### Failure
 ```bash
 curl http://127.0.0.1:3000/notInDB
 ```
-#### Expected Result:
+#### Expected Result: Failure due to not being a valid URL
 ```json
 {"message":"Internal server error"}
 ```
