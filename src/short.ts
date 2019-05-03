@@ -23,7 +23,7 @@ export const handler = async function(event:any, context:any) {
       "shortuuid": { S: shortid.generate() },
       "longurl": { S: parsedInput.originalURL }
     },
-    TableName: process.env.TABLE_NAME
+    TableName: process.env.TABLE_NAME || ""
   }
 
   const data = { 

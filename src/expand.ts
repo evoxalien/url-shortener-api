@@ -5,7 +5,8 @@ import * as aws from 'aws-sdk'
 const ddb = new aws.DynamoDB()
 
 export const handler = async function(event :any, context :any) {
-
+  console.log(event)
+  console.log(context)
   if(event.path == null)
   {
     return { statusCode: 500, body: 'Body Empty!' }
@@ -16,7 +17,7 @@ export const handler = async function(event :any, context :any) {
     Key: {
         "shortuuid": { S : stringArr[stringArr.length - 1] }
     },
-    TableName: process.env.TABLE_NAME
+    TableName: process.env.TABLE_NAME || "shortURL"
   }
   let ret :any = {}
   try {
@@ -26,6 +27,7 @@ export const handler = async function(event :any, context :any) {
     return { statusCode: 308, headers: { "Location": ret.Item.longurl.S } }
     } 
     catch(err) {
+      console.log(err)
       return { statusCode: 404, body: "URL Does Not Exist" }
     }
 } 
