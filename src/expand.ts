@@ -1,11 +1,14 @@
-const aws = require('aws-sdk')
+'use strict'
+
+//const aws = require('aws-sdk')
+import * as aws from 'aws-sdk'
 const ddb = new aws.DynamoDB()
 
-exports.handler = async function(event, context) {
-  let response = {}
+export const handler = async function(event :any, context :any) {
+
   if(event.path == null)
   {
-    return response = { statusCode: 500, body: 'Body Empty!' }
+    return { statusCode: 500, body: 'Body Empty!' }
   }
   const stringArr = event.path.split('/')
   
@@ -15,9 +18,9 @@ exports.handler = async function(event, context) {
     },
     TableName: process.env.TABLE_NAME
   }
-  let ret = {}
+  let ret :any = {}
   try {
-    await ddb.getItem(params, function(err,data) { 
+    await ddb.getItem(params, function(err:any,data:any) { 
       ret = data
     }).promise()
     return { statusCode: 308, headers: { "Location": ret.Item.longurl.S } }

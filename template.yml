@@ -8,7 +8,8 @@ Resources:
         Variables:
           TABLE_NAME: shortURL
           API_ENDPOINT: http://localhost:3000/
-      Handler: src/short.handler
+      CodeUri: dist/
+      Handler: short.handler
       Runtime: nodejs8.10
       Policies: AmazonDynamoDBFullAccess
       Events:
@@ -24,7 +25,8 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: shortURL
-      Handler: src/expand.handler
+      CodeUri: dist/
+      Handler: expand.handler
       Runtime: nodejs8.10
       Policies: AmazonDynamoDBFullAccess
       Events:

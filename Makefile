@@ -7,10 +7,12 @@ setup:
 	export AWS_DEFAULT_PROFILE=$(awsProfile)
 
 local:
+	tsc
 	sam local start-api
 
 build: 
 	$(info - - - - CREATING PACKAGE - - - - )
+	tsc
 	sam package \
 	--template-file template.yml \
 	--output-template-file package.yml \

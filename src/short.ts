@@ -1,9 +1,14 @@
-const aws = require('aws-sdk')
+'use strict'
+import * as aws from 'aws-sdk'
 const ddb = new aws.DynamoDB()
-const shortid = require('shortid')
+import * as shortid from "shortid"
+//import { String } from 'aws-sdk/clients/ecs';
 require('dotenv').config()
+//import * as dotenv from 'dotenv'
+//dotenv.load()
 
-exports.handler = async function(event, context) {
+export const handler = async function(event:any, context:any) {
+
   if(event.body == null){
     return { statusCode: 406, body: "Error: No Data in Body"}
   }
@@ -13,7 +18,7 @@ exports.handler = async function(event, context) {
     return { statusCode: 406, body: 'Error: Pass JSON - {"originalURL":"http://www.example.com/someLongURL"}'}
   }
 
-  const params = {
+  const params :any = {
     Item: {
       "shortuuid": { S: shortid.generate() },
       "longurl": { S: parsedInput.originalURL }

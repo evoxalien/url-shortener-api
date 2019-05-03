@@ -1,2 +1,2 @@
-import './src/short.js'
-import './src/expand.js'
+import './dist/short.js'
+import './dist/expand.js'

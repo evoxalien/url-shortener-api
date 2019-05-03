@@ -4,6 +4,9 @@
   "description": "This is an API for shortening URLs and then making request against those short URLs to recieve the original URL using Lambda, API Gateway and DynamoDB.",
   "main": "index.js",
   "dependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/node": "^11.13.10",
+    "@types/shortid": "0.0.29",
     "aws": "^0.0.3-2",
     "aws-sdk": "^2.445.0",
     "dotenv": "^7.0.0",
